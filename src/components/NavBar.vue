@@ -8,8 +8,8 @@
             </q-avatar>
             <span class="px-1 font-bold text-secondary">Saree</span>
         </div>
-        <div class="flex hidden  md:flex">
-            <ul class="flex space-x-5 items-center">
+        <div class="nav-list ">
+            <ul class=" flex tw-hidden md:flex space-x-5 items-center">
 
                 <li class="cursor-pointer">Home</li>
                 <li  class="cursor-pointer">Stores</li>
@@ -37,4 +37,25 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+
+.nav-list{
+
+}
+
+@media only screen and (max-width: 768px) {
+    .nav-list {
+        display: none; /* Hide .nav-list on mobile */
+    }
+}
+
+/* Media query for devices with a minimum width of 769px (typical for desktop screens) */
+@media only screen and (min-width: 769px) {
+    .nav-list {
+        display: block; /* Display .nav-list on desktop */
+        /* Additional styles for desktop if needed */
+    }
+}
+
+
+</style>
