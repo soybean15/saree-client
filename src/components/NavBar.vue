@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between w-full px-10 py-3">
+    <div class="flex justify-between w-full px-10 py-3 ">
 
 
         <div>
@@ -8,7 +8,7 @@
             </q-avatar>
             <span class="px-1 font-bold text-secondary">Saree</span>
         </div>
-        <div>
+        <div class="flex hidden  md:flex">
             <ul class="flex space-x-5 items-center">
 
                 <li class="cursor-pointer">Home</li>
