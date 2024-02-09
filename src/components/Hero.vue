@@ -1,10 +1,10 @@
 <template>
-    <div class="grid grid-cols-1 lg:grid-cols-2 bg-primary w-full  px-20  2xl:px-40   pt-32 pb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 bg-primary w-full  p-10 sm:px-20  2xl:px-40   pt-32 pb-20">
         <div class=" pt-10 ">
 
             <!-- <span class="glow-text  bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400  text-4xl inline-block text-transparent bg-clip-text  font-bold" >Hello</span> -->
 
-            <span class="text-5xl lg:text-5xl xl:text-8xl  font-extrabold text-secondary order-last lg:order-first">Discover daily essentials with ease</span>
+            <span class="text-3xl sm:text-5xl lg:text-5xl xl:text-8xl  font-extrabold text-secondary order-last lg:order-first">Discover daily essentials with ease</span>
             <div class="my-5 space-x-3">
                 <q-btn   color="accent" text-color="primary" label="Explore" size="20px" />
                 <q-btn   outline color="accent" text-color="accent" label="Get Started" size="20px" />
