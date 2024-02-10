@@ -80,9 +80,9 @@
                             <div class="flex justify-end py-3 ">
                                 <q-btn-group>
                                   
-                                    <q-btn color="green" text-color="white" label="Payment" />
-                                    <q-btn color="secondary" :to="{name:'addCredit',params:{id:props.row.id}}" text-color="primary" label="Add Credit" />
-                                    <q-btn color="red" text-color="white" label="Remove" />
+                                    <q-btn dense color="green" text-color="white" label="Payment" />
+                                    <q-btn dense color="secondary" :to="{name:'addCredit',params:{id:props.row.id}}" text-color="primary" label="Add Credit" />
+                                    <q-btn dense color="red" text-color="white" label="Remove" />
                                 </q-btn-group>
 
                             </div>
