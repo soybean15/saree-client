@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between w-full px-5 md:px-10 py-3 ">
+    <div class="flex justify-between items-center w-full px-1 md:px-10 py-3 ">
 
 
         <div class="flex items-center">
@@ -7,16 +7,14 @@
             <q-avatar>
                 <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
             </q-avatar>
-            <span class="px-1 font-bold text-secondary">Saree</span>
+            <span class="px-1 font-bold text-secondary">Sukii</span>
         </div>
         <div class="nav-list ">
             
             <ul class=" flex tw-hidden md:flex space-x-5 items-center">
 
-                <li class="cursor-pointer">Home</li>
-                <li  class="cursor-pointer">Stores</li>
-                <li class="cursor-pointer">Explore</li>
-
+                <li class="cursor-pointer " @click="activeNav = item.name" :class="{'text-accent':item.name == activeNav}" v-for="item in navItems" :key="item.name">{{item.label}}</li>
+                
 
             </ul>
 
@@ -39,11 +37,13 @@ import { storeToRefs } from 'pinia'
 export default {
     setup(){
         const nav = useNavStore()
-        const {drawer} = storeToRefs(nav)
+        const {drawer, navItems, activeNav} = storeToRefs(nav)
 
 
         return {
-            drawer
+            drawer,
+            navItems,
+            activeNav
         }
     }
 

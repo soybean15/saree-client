@@ -5,5 +5,24 @@ export const useNavStore = defineStore('nav', () => {
   
   
     const drawer = ref(false)
-    return { drawer}
+    const activeNav = ref('home')
+
+    const navItems =ref([
+        {
+            label: 'Home',
+            name: 'home',
+            icon: 'home'
+        },
+        {
+            label: 'Stores',
+            name: 'stores',
+            icon: 'storefront'
+        },
+        {
+            label: 'Explore',
+            name: 'explore',
+            icon: 'shopping_bag'
+        },
+    ])
+    return { drawer, navItems,activeNav }
   })

@@ -1,4 +1,5 @@
 <template>
+
     <q-drawer
         v-model="drawer"
         show-if-above
@@ -15,36 +16,17 @@
       >
         <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
           <q-list padding>
-            <q-item clickable v-ripple>
+            <q-item clickable @click="activeNav = item.name" v-ripple :active="item.name == activeNav" v-for="item in navItems" :key="item.key">
               <q-item-section avatar>
-                <q-icon name="home" />
+                <q-icon :name="item.icon" />
               </q-item-section>
 
               <q-item-section>
-                Home
+                {{item.label}}
               </q-item-section>
             </q-item>
 
-            <q-item active clickable v-ripple>
-              <q-item-section avatar>
-                <q-icon name="storefront" />
-              </q-item-section>
-
-              <q-item-section>
-                Stores
-              </q-item-section>
-            </q-item>
-
-            <q-item clickable v-ripple>
-              <q-item-section avatar>
-                <q-icon name="shopping_bag" />
-              </q-item-section>
-
-              <q-item-section>
-                Explore
-              </q-item-section>
-            </q-item>
-
+            
             <q-separator />
 
           </q-list>
@@ -61,10 +43,14 @@ export default {
   setup () {
     const nav = useNavStore()
 
-    const {drawer}  = storeToRefs(nav)
+    const {drawer ,navItems, activeNav}  = storeToRefs(nav)
+
+    
     return {
       drawer,
-      miniState: ref(true)
+      miniState: ref(true),
+      navItems,
+      activeNav
     }
   }
 }
