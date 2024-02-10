@@ -45,7 +45,16 @@ export const useLoanStore = defineStore('loan', () => {
 
     const addCredit = (lender, items) => {
 
-        console.log(items)
+        const index = lenders.value.findIndex(item => item.id === lender.id);
+
+       
+        if (index !== -1) {
+            lenders.value[index].total_credit = lender.total_credit
+            lenders.value[index].credits.push(...items);
+           
+            localStorage.setItem('lenders', JSON.stringify(lenders.value));
+            
+        }
     }
 
 

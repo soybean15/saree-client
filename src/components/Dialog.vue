@@ -9,7 +9,7 @@
       <q-dialog v-model="dialog" :position="position">
         <q-card :style="{'width':$q.screen.xs ? '350px': '600px'}">
           <q-card-section class="row items-center no-wrap">
-          <div class="text-xl font-bold">Add New Creditor</div>
+          <div class="text-xl font-bold">{{title}}</div>
           </q-card-section>
           <q-separator/>
          
@@ -32,6 +32,7 @@
   
   export default {
   
+    props:['title'],
     setup () {
       const dialog = ref(false)
       const position = ref('top')

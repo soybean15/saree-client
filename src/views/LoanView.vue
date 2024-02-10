@@ -10,7 +10,7 @@
                         </template>
                     </q-input>
 
-                    <dialog-vue>
+                    <dialog-vue :title="'Add New Creditor'">
                         <template #button="{ open }">
                             <q-btn round color="primary" icon="add" @click="open($q.screen.xs ? 'bottom' : 'standard')" />
                         </template>
@@ -122,18 +122,18 @@
                         <div class="flex justify-center">
                             <q-btn-dropdown color="primary" label=" Actions">
                                 <q-list>
-                                    <q-item clickable v-close-popup @click="onItemClick">
+                                    <q-item clickable v-close-popup >
                                         <q-item-section>
                                             <q-item-label>History</q-item-label>
                                         </q-item-section>
                                     </q-item>
-                                    <q-item clickable v-close-popup @click="onItemClick">
+                                    <q-item clickable v-close-popup>
                                         <q-item-section>
                                             <q-item-label>Payment</q-item-label>
                                         </q-item-section>
                                     </q-item>
 
-                                    <q-item clickable v-close-popup @click="onItemClick">
+                                    <q-item clickable v-close-popup :to="{name:'addCredit',params:{id:props.row.id}}" >
                                         <q-item-section>
                                             <q-item-label>Add Credit</q-item-label>
                                         </q-item-section>
@@ -280,7 +280,8 @@ export default {
           
             name: '',
             total_credit: 0,
-            total_paid: 0
+            total_paid: 0,
+            credits:[]
         })
 
         return {
