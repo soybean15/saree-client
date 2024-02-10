@@ -1,6 +1,6 @@
 <template>
     <div class="q-pa-md">
-        <q-table title="Creditor" :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
+        <q-table title="Mga Pautang" :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
             <template #top-right>
                 <div class="flex space-x-4">
                     <q-input dense debounce="300" v-model="filter" placeholder="Search">
@@ -82,7 +82,7 @@
                                   
                                     <q-btn dense color="green" text-color="white" label="Payment" />
                                     <q-btn dense color="secondary" :to="{name:'addCredit',params:{id:props.row.id}}" text-color="primary" label="Add Credit" />
-                                    <q-btn dense color="red" text-color="white" label="Remove" />
+                                    <q-btn dense color="red" text-color="white" label="Remove"  @click="loanStore.removeLender(props.row.id)" />
                                 </q-btn-group>
 
                             </div>
@@ -137,7 +137,7 @@
                                             <q-item-label>Add Credit</q-item-label>
                                         </q-item-section>
                                     </q-item>
-                                    <q-item clickable v-close-popup @click="onItemClick">
+                                    <q-item clickable v-close-popup @click="loanStore.removeLender(props.row.id)">
                                         <q-item-section>
                                             <q-item-label>Remove</q-item-label>
                                         </q-item-section>
