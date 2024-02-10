@@ -9,6 +9,7 @@
       </q-toolbar>
     </q-header>
 
+    <drawer/>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -16,9 +17,10 @@
   </q-layout>
 </template>
 <script>
+import Drawer from './components/Drawer.vue';
 import NavBar from './components/NavBar.vue';
 export default {
-  components:{NavBar}
+  components:{NavBar,Drawer}
 
 }
 </script>

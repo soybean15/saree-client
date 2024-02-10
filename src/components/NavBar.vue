@@ -1,14 +1,16 @@
 <template>
-    <div class="flex justify-between w-full px-10 py-3 ">
+    <div class="flex justify-between w-full px-5 md:px-10 py-3 ">
 
 
-        <div>
+        <div class="flex items-center">
+            <q-btn flat @click="drawer = !drawer" round dense icon="menu" class="flex md:hidden q-mr-sm" />
             <q-avatar>
                 <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
             </q-avatar>
             <span class="px-1 font-bold text-secondary">Saree</span>
         </div>
         <div class="nav-list ">
+            
             <ul class=" flex tw-hidden md:flex space-x-5 items-center">
 
                 <li class="cursor-pointer">Home</li>
@@ -32,16 +34,24 @@
 </template>
 
 <script>
+import {useNavStore} from '@/stores/nav'
+import { storeToRefs } from 'pinia'
 export default {
+    setup(){
+        const nav = useNavStore()
+        const {drawer} = storeToRefs(nav)
+
+
+        return {
+            drawer
+        }
+    }
 
 }
 </script>
 
 <style scoped>
 
-.nav-list{
-
-}
 
 @media only screen and (max-width: 768px) {
     .nav-list {

@@ -4,10 +4,10 @@
 
             <!-- <span class="glow-text  bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400  text-4xl inline-block text-transparent bg-clip-text  font-bold" >Hello</span> -->
 
-            <span class="text-3xl sm:text-5xl lg:text-5xl xl:text-8xl  font-extrabold text-secondary order-last lg:order-first">Discover daily essentials with ease</span>
-            <div class="my-5 space-y-1 sm:space-x-3">
-                <q-btn   color="accent" text-color="primary" label="Explore" size="20px" />
-                <q-btn   outline color="accent" text-color="accent" label="Get Started" size="20px" />
+            <span class="text-4xl sm:text-5xl lg:text-5xl xl:text-8xl  font-extrabold text-secondary order-last lg:order-first">Discover daily essentials with ease</span>
+            <div class=" flex items-center space-x-1 my-5 sm:space-x-3">
+                <q-btn   color="accent" text-color="primary" label="Explore" size="15px" />
+                <q-btn   outline color="accent" text-color="accent" label="Get Started" size="15px" />
             </div>
         </div>
       
