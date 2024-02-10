@@ -1,12 +1,42 @@
 <template>
     <div class="q-pa-md">
-        <q-table title="Creditor" :rows="rows" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
+        <q-table title="Creditor" :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
             <template #top-right>
-                <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-                    <template v-slot:append>
-                        <q-icon name="search" />
-                    </template>
-                </q-input>
+                <div class="flex space-x-4">
+                    <q-input dense debounce="300" v-model="filter" placeholder="Search">
+                        <template v-slot:append>
+                            <q-icon name="search" />
+                        </template>
+                    </q-input>
+
+                    <dialog-vue>
+                        <template #button="{ open }">
+                            <q-btn round color="primary" icon="add" @click="open($q.screen.xs ? 'bottom' : 'standard')" />
+                        </template>
+
+                        <template #body="{ closeDialog }">
+                            <q-form @submit="onSubmit(closeDialog)" class="flex flex-col  w-full">
+                                <div class="space-y-1">
+
+                                    <q-input outlined v-model="newLender.name" label="Name" class="w-full" :rules="[
+                                        val => (val && val.length > 0) || 'Name is Required'
+                                    ]" />
+                                    <q-input outlined v-model="newLender.total_credit" label="Credits" type="number"
+                                        class="w-full" />
+
+                                    <q-btn type="submit" class="my-2" color="primary" label="Add" />
+
+                                </div>
+
+                            </q-form>
+
+                        </template>
+
+                    </dialog-vue>
+
+
+                </div>
+
             </template>
 
 
@@ -17,14 +47,7 @@
                             <div class="flex justify-between items-center">
 
                                 <strong class="text-xl">{{ props.row.name }}</strong>
-                                <div>
-                                    <q-btn-group>
-                                        <q-btn  color="accent" text-color="primary"  label="Payment" />
-                                        <q-btn  color="secondary" text-color="primary"  label="Add Loan" />
-
-                                    </q-btn-group>
-
-                                </div>
+                                <q-btn flat round color="primary" icon="history" />
                             </div>
 
 
@@ -35,23 +58,34 @@
                         <div class="w-full  px-5 ">
                             <div class="flex justify-between items-center">
                                 <span class="font-bold">Total Credit</span>
-                                <q-chip dense @click="onClick" color="primary" text-color="white">
+                                <q-chip dense color="primary" text-color="white">
                                     P{{ props.row.total_credit }}
                                 </q-chip>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="font-bold">Total Paid</span>
-                                <q-chip dense @click="onClick" color="accent" text-color="white">
+                                <q-chip dense color="accent" text-color="white">
                                     P{{ props.row.total_paid }}
                                 </q-chip>
 
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="font-bold">Total Balance</span>
-                                <q-chip dense @click="onClick" color="green" text-color="white">
+                                <q-chip dense color="green" text-color="white">
                                     P{{ props.row.total_credit - props.row.total_paid }}
                                 </q-chip>
                             </div>
+
+
+                            <div class="flex justify-end py-3 ">
+                                <q-btn-group>
+                                    <q-btn color="accent" text-color="primary" label="Payment" />
+                                    <q-btn color="secondary" text-color="primary" label="Add Loan" />
+
+                                </q-btn-group>
+
+                            </div>
+
                         </div>
 
                     </q-card>
@@ -66,18 +100,18 @@
                         {{ props.row.name }}
                     </q-td>
                     <q-td key="total_credit" :props="props">
-                        <q-chip dense @click="onClick" color="primary" text-color="white">
+                        <q-chip dense color="primary" text-color="white">
                             P{{ props.row.total_credit }}
                         </q-chip>
                     </q-td>
                     <q-td key="total_paid" :props="props">
-                        <q-chip dense @click="onClick" color="accent" text-color="white">
+                        <q-chip dense color="accent" text-color="white">
                             P{{ props.row.total_paid }}
                         </q-chip>
 
                     </q-td>
                     <q-td key="balance" :props="props">
-                        <q-chip dense @click="onClick" color="green" text-color="white">
+                        <q-chip dense color="green" text-color="white">
                             P{{ props.row.total_credit - props.row.total_paid }}
                         </q-chip>
                     </q-td>
@@ -116,7 +150,10 @@
 </template>
   
 <script>
+import DialogVue from '@/components/Dialog.vue'
 import { ref } from 'vue'
+import { useLoanStore } from '@/stores/loans';
+import { storeToRefs } from 'pinia';
 const columns = [
     {
         name: 'name',
@@ -220,11 +257,36 @@ const rows = [
 
 
 export default {
+    components: { DialogVue },
     setup() {
+
+        const loanStore = useLoanStore()
+        const { lenders } = storeToRefs(loanStore)
+
+        const newLender = ref({
+            name: '',
+            total_credit: 0,
+            total_paid: 0
+        })
+
         return {
             columns,
             rows,
             filter: ref(''),
+            lenders,
+            loanStore,
+            newLender,
+            onSubmit:   (closeDialog) => {
+                loanStore.addLender({...newLender.value},()=>{
+              
+                newLender.value.name=''
+                closeDialog()
+                newLender.value.total_credit=0
+                })
+               
+           
+               
+            }
         }
     }
 }
