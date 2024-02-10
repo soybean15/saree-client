@@ -79,9 +79,10 @@
 
                             <div class="flex justify-end py-3 ">
                                 <q-btn-group>
-                                    <q-btn color="accent" text-color="primary" label="Payment" />
-                                    <q-btn color="secondary" text-color="primary" label="Add Loan" />
-
+                                  
+                                    <q-btn color="green" text-color="white" label="Payment" />
+                                    <q-btn color="secondary" :to="{name:'addCredit',params:{id:props.row.id}}" text-color="primary" label="Add Credit" />
+                                    <q-btn color="red" text-color="white" label="Remove" />
                                 </q-btn-group>
 
                             </div>
@@ -122,13 +123,23 @@
                                 <q-list>
                                     <q-item clickable v-close-popup @click="onItemClick">
                                         <q-item-section>
+                                            <q-item-label>History</q-item-label>
+                                        </q-item-section>
+                                    </q-item>
+                                    <q-item clickable v-close-popup @click="onItemClick">
+                                        <q-item-section>
                                             <q-item-label>Payment</q-item-label>
                                         </q-item-section>
                                     </q-item>
 
                                     <q-item clickable v-close-popup @click="onItemClick">
                                         <q-item-section>
-                                            <q-item-label>Add Loan</q-item-label>
+                                            <q-item-label>Add Credit</q-item-label>
+                                        </q-item-section>
+                                    </q-item>
+                                    <q-item clickable v-close-popup @click="onItemClick">
+                                        <q-item-section>
+                                            <q-item-label>Remove</q-item-label>
                                         </q-item-section>
                                     </q-item>
 
@@ -264,6 +275,7 @@ export default {
         const { lenders } = storeToRefs(loanStore)
 
         const newLender = ref({
+          
             name: '',
             total_credit: 0,
             total_paid: 0
