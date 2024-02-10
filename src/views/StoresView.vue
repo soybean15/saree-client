@@ -1,5 +1,5 @@
 <template>
-  
+  Stores
 </template>
 
 <script>

@@ -13,7 +13,7 @@
             
             <ul class=" flex tw-hidden md:flex space-x-5 items-center">
 
-                <li class="cursor-pointer " @click="activeNav = item.name" :class="{'text-accent':item.name == activeNav}" v-for="item in navItems" :key="item.name">{{item.label}}</li>
+                <li class="cursor-pointer " @click="navigate(item.name)" :class="{'text-accent':item.name == activeNav}" v-for="item in navItems" :key="item.name">{{item.label}}</li>
                 
 
             </ul>
@@ -34,16 +34,24 @@
 <script>
 import {useNavStore} from '@/stores/nav'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 export default {
     setup(){
         const nav = useNavStore()
         const {drawer, navItems, activeNav} = storeToRefs(nav)
 
-
+       
+        const router = useRouter()
         return {
             drawer,
             navItems,
-            activeNav
+            activeNav,
+         
+            navigate:(name)=>{
+                activeNav.value = name
+                router.push({name:name})
+
+            }
         }
     }
 

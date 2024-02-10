@@ -19,6 +19,11 @@ export const useNavStore = defineStore('nav', () => {
             icon: 'storefront'
         },
         {
+            label: 'Pautang',
+            name: 'loans',
+            icon: 'receipt_long'
+        },
+        {
             label: 'Explore',
             name: 'explore',
             icon: 'shopping_bag'

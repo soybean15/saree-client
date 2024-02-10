@@ -9,7 +9,10 @@
       </q-toolbar>
     </q-header>
 
+
     <drawer/>
+
+
     <q-page-container>
       <router-view />
     </q-page-container>

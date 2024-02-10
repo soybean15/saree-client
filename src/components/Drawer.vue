@@ -2,7 +2,7 @@
 
     <q-drawer
         v-model="drawer"
-        show-if-above
+       
 
         :mini="miniState"
         @mouseover="miniState = false"
@@ -13,10 +13,12 @@
         :breakpoint="500"
         bordered
         :class="$q.dark.isActive ? 'bg-accent' : 'bg-secondary'"
+        class=""
+      
       >
         <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
           <q-list padding>
-            <q-item clickable @click="activeNav = item.name" v-ripple :active="item.name == activeNav" v-for="item in navItems" :key="item.key">
+            <q-item clickable @click="activeNav = item.name" v-ripple :active="item.name == activeNav" v-for="item in navItems" :key="item.key" :to="{ name: item.name }">
               <q-item-section avatar>
                 <q-icon :name="item.icon" />
               </q-item-section>
