@@ -1,5 +1,6 @@
 <template>
     <div class="q-pa-md">
+        <bread-crumbs/>
         <q-table title="Mga Pautang" :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
             <template #top-right>
                 <div class="flex space-x-4">
@@ -165,6 +166,7 @@ import DialogVue from '@/components/Dialog.vue'
 import { ref } from 'vue'
 import { useLoanStore } from '@/stores/loans';
 import { storeToRefs } from 'pinia';
+import BreadCrumbs from '@/components/BreadCrumbs.vue';
 const columns = [
     {
         name: 'name',
@@ -268,7 +270,7 @@ const rows = [
 
 
 export default {
-    components: { DialogVue },
+    components: { DialogVue ,BreadCrumbs},
     setup() {
 
         const loanStore = useLoanStore()

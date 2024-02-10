@@ -1,5 +1,7 @@
 <template>
+    
     <div class="p-3 md:p-10 max-w-screen-sm rounded border shadow-md p-3 space-y-2 m-2">
+        <bread-crumbs/>
         <q-form @submit="onSubmit">
         <div class="flex justify-between">
 
@@ -34,7 +36,9 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import { date } from 'quasar'
+import BreadCrumbs from '@/components/BreadCrumbs.vue'
 export default {
+    components:{BreadCrumbs},
     setup() {
         const route = useRoute()
         const loanStore = useLoanStore()
