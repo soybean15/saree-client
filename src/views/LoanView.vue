@@ -1,6 +1,7 @@
 <template>
     <div class="q-pa-md">
         <bread-crumbs/>
+        
         <q-table title="Mga Pautang" :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
             <template #top-right>
                 <div class="flex space-x-4">
@@ -158,6 +159,7 @@
             </template>
 
         </q-table>
+        <div class="italic text-gray-600 my-4">Note : Please note that this application saves all data locally in your browser's storage.</div>
     </div>
 </template>
   
