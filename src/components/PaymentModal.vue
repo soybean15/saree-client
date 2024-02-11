@@ -7,18 +7,22 @@
         </template>
 
         <template #body="{ closeDialog }">
-            <q-form @submit="onSubmit(closeDialog)">
+            <q-form @submit="onSubmit(closeDialog)" class="w-full">
 
-                <div class="q-gutter-sm">
-                    <q-radio v-model="radioOption" val="payAll" label="Pay All" />
-                    <q-radio v-model="radioOption" val="custom" label="Pay Amount" />
-
-                </div>
-                <q-input outlined type="number" v-model="payment" :disable="radioOption == 'payAll'" :rules="[
+                <div class="row items-center q-gutter-sm">
+                    <q-radio class="col-4" v-model="radioOption" val="payAll" label="Pay All" />
+                    <q-radio class="col-4" v-model="radioOption" val="custom" label="Pay Amount" />
+                    <q-input class="mt-7 col-3 " dense outlined type="number" v-model="payment" :disable="radioOption == 'payAll'" :rules="[
                                         val => (val && val.length > 0) || 'Field is Required'
                                     ]"/>
+                </div>
 
-                <q-btn label="Submit" type="submit" class="my-5" color="green"/>
+                
+             
+                <div class="flex justify-end">
+                    <q-btn label="Submit" type="submit" class="mb-5" color="green"/>
+                </div>
+            
 
 
             </q-form>
@@ -86,7 +90,14 @@ export default {
                 const timeStamp = Date.now()
                 const formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD')
                 const uniqueId = generateUniqueId();
+
+                if( payment.value > getBalance()){
+                    payment.value = getBalance()
+                }
+
                 const item = { id: uniqueId, payment:payment.value, date: formattedString }
+
+
 
                 loanStore.payCredit(lender.value, item)
               

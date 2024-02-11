@@ -67,6 +67,7 @@ export const useLoanStore = defineStore('loan', () => {
     const payCredit=(lender,item)=>{
         const index = lenders.value.findIndex(item => item.id === lender.id);
         if (index !== -1) {
+         
             lenders.value[index].total_paid =  parseInt(lender.total_paid) + parseInt(item.payment)
 
             console.log(lenders.value[index])
