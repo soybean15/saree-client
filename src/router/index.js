@@ -32,6 +32,12 @@ const routes = [
     name: 'addCredit',
     meta:{routes:[{label:'Loan',name:'loans'},{label:'Add Credit',name:'addCredit'}]},
     component: () => import(/* webpackChunkName: "about" */ '../views/AddCreditView.vue')
+  },
+  {
+    path: '/credit-history/:id',
+    name: 'creditHistory',
+    meta:{routes:[{label:'Loan',name:'loans'},{label:'History',name:'creditHistory'}]},
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreditHistoryView.vue')
   }
 ]
 

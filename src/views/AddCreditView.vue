@@ -115,17 +115,14 @@ export default {
     setup() {
         const route = useRoute()
         const router = useRouter()
-        const loanStore = useLoanStore()
-        const { lenders } = storeToRefs(loanStore)
         const id = route.params.id
 
+        const loanStore = useLoanStore()
 
 
         const items = ref([])
 
-        const foundLender = lenders.value.find(lender => lender.id == id);
-
-        const lender = ref(foundLender);
+        const lender = ref(loanStore.getLender(id));
 
         const generateUniqueId = () => {
             const timestamp = Date.now().toString(36); // Convert current timestamp to base-36 string

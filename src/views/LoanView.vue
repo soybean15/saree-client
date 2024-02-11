@@ -53,7 +53,7 @@
                             <div class="flex justify-between items-center">
 
                                 <strong class="text-xl">{{ props.row.name }}</strong>
-                                <q-btn flat round color="primary" icon="history" />
+                                <q-btn :to="{name:'creditHistory',params:{id:props.row.id}}" flat round color="primary" icon="history" />
                             </div>
 
 

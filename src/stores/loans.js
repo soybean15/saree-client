@@ -7,6 +7,12 @@ export const useLoanStore = defineStore('loan', () => {
     const savedLendersJSON = localStorage.getItem('lenders');
     const lenders = ref(JSON.parse(savedLendersJSON) ?? [])
 
+   
+
+    const getLender=(id)=>{
+        return lenders.value.find(lender => lender.id == id);
+    }
+
     const addLender = (lender, closure) => {
         lender.id = generateId();
         lender.total_credit = parseInt(lender.total_credit);
@@ -58,5 +64,5 @@ export const useLoanStore = defineStore('loan', () => {
     }
 
 
-    return { lenders, addLender, addCredit, removeLender }
+    return { lenders, addLender, addCredit, removeLender ,getLender}
 })
