@@ -10,15 +10,15 @@
 
 
                 <!-- <q-btn color="green" label="Export" @click="exportJson"/> -->
-                <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportTable" />
+                <q-btn color="green"  icon-right="archive" label="Export" no-caps @click="exportTable" />
 
 
             </template>
             <template #top-right>
                 <div class="flex space-x-4">
-                    <q-input dense debounce="300" v-model="filter" placeholder="Search">
+                    <q-input  dense debounce="300" v-model="filter" placeholder="Search">
                         <template v-slot:append>
-                            <q-icon name="search" />
+                            <q-icon  name="search" />
                         </template>
                     </q-input>
 
@@ -196,8 +196,11 @@
             </template>
 
         </q-table>
-        <div class="italic text-gray-600 my-4">Note : Please note that this application saves all data locally in your
-            browser's storage.</div>
+        <div class="italic text-gray-600 my-4">
+  Note: This application saves all data locally in your browser's storage.
+  Make sure to export your data for backup if you plan to clear your browser's data.
+</div>
+
     </div>
 </template>
   
@@ -315,15 +318,10 @@ export default {
 
 
             },
-            exportJson: () => {
-                if (confirm('Export all Data?')) {
-                    exportData('lenders')
-                }
-
-            },
             exportTable() {
-                // naive encoding to csv format
-                const content = [columns.map(col => wrapCsvValue(col.label))].concat(
+
+                if(confirm('Export Data to CSV?')){
+                    const content = [columns.map(col => wrapCsvValue(col.label))].concat(
                     lenders.value.map(row => columns.map(col => wrapCsvValue(
                         typeof col.field === 'function'
                             ? col.field(row)
@@ -346,6 +344,9 @@ export default {
                         icon: 'warning'
                     })
                 }
+                }
+               
+                
             }
         }
     }
