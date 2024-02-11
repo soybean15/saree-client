@@ -38,7 +38,8 @@ const routes = [
     name: 'creditHistory',
     meta:{routes:[{label:'Loan',name:'loans'},{label:'History',name:'creditHistory'}]},
     component: () => import(/* webpackChunkName: "about" */ '../views/CreditHistoryView.vue')
-  }
+  },
+
 ]
 
 const router = createRouter({

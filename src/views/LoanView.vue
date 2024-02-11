@@ -1,17 +1,18 @@
 <template>
     <div class="q-pa-md">
-        <bread-crumbs/>
+        <bread-crumbs />
 
 
         <div class="font-bold px-3 text-xl mt-5">Mga Pautang</div>
-        <q-table  :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
+        <q-table :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
             <template #top-left>
 
 
 
-                <q-btn color="green" label="Export" @click="exportData('lenders')"/>
-             
-        
+                <!-- <q-btn color="green" label="Export" @click="exportJson"/> -->
+                <q-btn color="primary" icon-right="archive" label="Export to csv" no-caps @click="exportTable" />
+
+
             </template>
             <template #top-right>
                 <div class="flex space-x-4">
@@ -36,11 +37,11 @@
                                     <q-input outlined v-model="newLender.total_credit" label="Credits" type="number"
                                         class="w-full" />
 
-                                        <div class="flex justify-end mb-10">
-                                            <q-btn type="submit" class="my-2" color="primary" label="Add" />
-                                        </div>
+                                    <div class="flex justify-end mb-10">
+                                        <q-btn type="submit" class="my-2" color="primary" label="Add" />
+                                    </div>
 
-                                 
+
 
                                 </div>
 
@@ -62,8 +63,10 @@
                         <q-card-section class="text-center">
                             <div class="flex justify-between items-center">
 
-                                <strong class="text-xl">{{ props.row.name }} <q-badge color="green" v-if="( props.row.total_credit - props.row.total_paid)==0">Paid</q-badge></strong>
-                                <q-btn :to="{name:'creditHistory',params:{id:props.row.id}}" flat round color="primary" icon="history" />
+                                <strong class="text-xl">{{ props.row.name }} <q-badge color="green"
+                                        v-if="(props.row.total_credit - props.row.total_paid) == 0">Paid</q-badge></strong>
+                                <q-btn :to="{ name: 'creditHistory', params: { id: props.row.id } }" flat round color="primary"
+                                    icon="history" />
                             </div>
 
 
@@ -81,7 +84,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="font-bold">Total Paid</span>
                                 <q-chip dense color="accent" text-color="white">
-                                    P{{ parseInt( props.row.total_paid) }}
+                                    P{{ parseInt(props.row.total_paid) }}
                                 </q-chip>
 
                             </div>
@@ -94,20 +97,24 @@
 
 
                             <div class="flex justify-between py-3 ">
-                            
-                                  
-                                    <payment-modal :id="props.row.id">
-                                        <template #button="{open}">
-                                    <q-btn dense color="green" text-color="white" label="Payment" @click="open('bottom')" :disable="( props.row.total_credit -props.row.total_paid)==0"/>
 
-                                        </template>
-                                    </payment-modal>
-                                    <div>
-                                        <q-btn dense color="secondary" :to="{name:'addCredit',params:{id:props.row.id}}" text-color="primary" label="Add Credit" />
-                                    <q-btn dense color="red" text-color="white" label="Remove"  @click="loanStore.removeLender(props.row.id)" />
-                                    </div>
-                                   
-                               
+
+                                <payment-modal :id="props.row.id">
+                                    <template #button="{ open }">
+                                        <q-btn dense color="green" text-color="white" label="Payment"
+                                            @click="open('bottom')"
+                                            :disable="(props.row.total_credit - props.row.total_paid) == 0" />
+
+                                    </template>
+                                </payment-modal>
+                                <div>
+                                    <q-btn dense color="secondary" :to="{ name: 'addCredit', params: { id: props.row.id } }"
+                                        text-color="primary" label="Add Credit" />
+                                    <q-btn dense color="red" text-color="white" label="Remove"
+                                        @click="loanStore.removeLender(props.row.id)" />
+                                </div>
+
+
 
                             </div>
 
@@ -122,7 +129,8 @@
             <template v-slot:body="props">
                 <q-tr :props="props">
                     <q-td key="name" :props="props">
-                     <span>{{ props.row.name }}</span>    <q-badge color="green" v-if="( props.row.total_credit - props.row.total_paid)==0">Paid</q-badge>
+                        <span>{{ props.row.name }}</span> <q-badge color="green"
+                            v-if="(props.row.total_credit - props.row.total_paid) == 0">Paid</q-badge>
                     </q-td>
                     <q-td key="total_credit" :props="props">
                         <q-chip dense color="primary" text-color="white">
@@ -145,24 +153,25 @@
                         <div class="flex justify-center">
                             <q-btn-dropdown color="primary" label=" Actions">
                                 <q-list>
-                                    <q-item clickable v-close-popup :to="{name:'creditHistory',params:{id:props.row.id}}">
+                                    <q-item clickable v-close-popup :to="{ name: 'creditHistory', params: { id: props.row.id } }">
                                         <q-item-section>
                                             <q-item-label>History</q-item-label>
                                         </q-item-section>
                                     </q-item>
 
                                     <payment-modal :id="props.row.id">
-                                        <template #button="{open}">
-                                    <q-item clickable  @click="open('standard')" :disable="( props.row.total_credit -props.row.total_paid)==0"> 
-                                        <q-item-section>
-                                            <q-item-label>Payment</q-item-label>
-                                        </q-item-section>
-                                   
-                                    </q-item>
-                                </template>
+                                        <template #button="{ open }">
+                                            <q-item clickable @click="open('standard')"
+                                                :disable="(props.row.total_credit - props.row.total_paid) == 0">
+                                                <q-item-section>
+                                                    <q-item-label>Payment</q-item-label>
+                                                </q-item-section>
+
+                                            </q-item>
+                                        </template>
                                     </payment-modal>
 
-                                    <q-item clickable v-close-popup :to="{name:'addCredit',params:{id:props.row.id}}" >
+                                    <q-item clickable v-close-popup :to="{ name: 'addCredit', params: { id: props.row.id } }">
                                         <q-item-section>
                                             <q-item-label>Add Credit</q-item-label>
                                         </q-item-section>
@@ -187,7 +196,8 @@
             </template>
 
         </q-table>
-        <div class="italic text-gray-600 my-4">Note : Please note that this application saves all data locally in your browser's storage.</div>
+        <div class="italic text-gray-600 my-4">Note : Please note that this application saves all data locally in your
+            browser's storage.</div>
     </div>
 </template>
   
@@ -198,7 +208,8 @@ import { ref } from 'vue'
 import { useLoanStore } from '@/stores/loans';
 import { storeToRefs } from 'pinia';
 import BreadCrumbs from '@/components/BreadCrumbs.vue';
-import {exportData} from '@/utils/exportJson'
+import { exportData } from '@/utils/exportJson'
+import { exportFile } from 'quasar'
 const columns = [
     {
         name: 'name',
@@ -233,7 +244,7 @@ const columns = [
         required: true,
         label: 'Balance',
         align: 'left',
-        field: row => row.balance,
+        field: row => row.total_credit - row.total_paid,
         format: val => `${val}`,
         sortable: true
     },
@@ -247,94 +258,94 @@ const columns = [
 
 ]
 
-const rows = [
-    {
-        name: 'Marie',
-        total_credit: 159,
-        total_paid: 100
-    },
-    {
-        name: 'John',
-        total_credit: 200,
-        total_paid: 150
-    },
-    {
-        name: 'Emily',
-        total_credit: 100,
-        total_paid: 80
-    },
-    {
-        name: 'Michael',
-        total_credit: 300,
-        total_paid: 200
-    },
-    {
-        name: 'Sarah',
-        total_credit: 250,
-        total_paid: 200
-    },
-    {
-        name: 'David',
-        total_credit: 180,
-        total_paid: 120
-    },
-    {
-        name: 'Anna',
-        total_credit: 220,
-        total_paid: 180
-    },
-    {
-        name: 'James',
-        total_credit: 150,
-        total_paid: 100
-    },
-    {
-        name: 'Sophia',
-        total_credit: 280,
-        total_paid: 250
-    },
-    {
-        name: 'Daniel',
-        total_credit: 210,
-        total_paid: 180
-    }
-];
 
+
+function wrapCsvValue (val, formatFn, row) {
+  let formatted = formatFn !== void 0
+    ? formatFn(val, row)
+    : val
+
+  formatted = formatted === void 0 || formatted === null
+    ? ''
+    : String(formatted)
+
+  formatted = formatted.split('"').join('""')
+  /**
+   * Excel accepts \n and \r in strings, but some other CSV parsers do not
+   * Uncomment the next two lines to escape new lines
+   */
+  // .split('\n').join('\\n')
+  // .split('\r').join('\\r')
+
+  return `"${formatted}"`
+}
 
 export default {
-    components: { DialogVue ,BreadCrumbs,PaymentModal},
+    components: { DialogVue, BreadCrumbs, PaymentModal },
     setup() {
 
         const loanStore = useLoanStore()
         const { lenders } = storeToRefs(loanStore)
 
         const newLender = ref({
-          
+
             name: '',
             total_credit: null,
             total_paid: null,
-            credits:[],
-            payments:[]
+            credits: [],
+            payments: []
         })
 
         return {
             columns,
-            rows,
+      
             filter: ref(''),
             lenders,
             loanStore,
             newLender,
             exportData,
-            onSubmit:   (closeDialog) => {
-                loanStore.addLender({...newLender.value},()=>{
-              
-                newLender.value.name=''
-                closeDialog()
-                newLender.value.total_credit=0
+            onSubmit: (closeDialog) => {
+                loanStore.addLender({ ...newLender.value }, () => {
+
+                    newLender.value.name = ''
+                    closeDialog()
+                    newLender.value.total_credit = 0
                 })
-               
-           
-               
+
+
+
+            },
+            exportJson: () => {
+                if (confirm('Export all Data?')) {
+                    exportData('lenders')
+                }
+
+            },
+            exportTable() {
+                // naive encoding to csv format
+                const content = [columns.map(col => wrapCsvValue(col.label))].concat(
+                    lenders.value.map(row => columns.map(col => wrapCsvValue(
+                        typeof col.field === 'function'
+                            ? col.field(row)
+                            : row[col.field === void 0 ? col.name : col.field],
+                        col.format,
+                        row
+                    )).join(','))
+                ).join('\r\n')
+
+                const status = exportFile(
+                    'table-export.csv',
+                    content,
+                    'text/csv'
+                )
+
+                if (status !== true) {
+                    $q.notify({
+                        message: 'Browser denied file download...',
+                        color: 'negative',
+                        icon: 'warning'
+                    })
+                }
             }
         }
     }
