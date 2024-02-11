@@ -3,18 +3,13 @@
         <bread-crumbs />
 
 
-        <div class="font-bold px-3 text-xl mt-5">Mga Pautang</div>
+        <div class="flex justify-between font-bold px-3 text-xl mt-5">
+            <span>Mga Pautang</span>
+            <q-btn color="accent" text-color="primary"  icon-right="archive" label="Export" no-caps @click="exportTable" />
+        </div>
         <q-table :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
-            <template #top-left>
-
-
-
-                <!-- <q-btn color="green" label="Export" @click="exportJson"/> -->
-                <q-btn color="green"  icon-right="archive" label="Export" no-caps @click="exportTable" />
-
-
-            </template>
-            <template #top-right>
+          
+            <template #top>
                 <div class="flex space-x-4">
                     <q-input  dense debounce="300" v-model="filter" placeholder="Search">
                         <template v-slot:append>
@@ -24,7 +19,7 @@
 
                     <dialog-vue :title="'Add New Creditor'">
                         <template #button="{ open }">
-                            <q-btn round color="primary" icon="add" @click="open($q.screen.xs ? 'bottom' : 'standard')" />
+                            <q-btn rounded color="primary" icon-right="add" label="Add Lender" @click="open($q.screen.xs ? 'bottom' : 'standard')" />
                         </template>
 
                         <template #body="{ closeDialog }">
@@ -38,7 +33,7 @@
                                         class="w-full" />
 
                                     <div class="flex justify-end mb-10">
-                                        <q-btn type="submit" class="my-2" color="primary" label="Add" />
+                                        <q-btn type="submit" class="my-2" color="primary" label="Submit" />
                                     </div>
 
 
@@ -108,7 +103,7 @@
                                     </template>
                                 </payment-modal>
                                 <div>
-                                    <q-btn dense color="secondary" :to="{ name: 'addCredit', params: { id: props.row.id } }"
+                                    <q-btn dense color="accent" :to="{ name: 'addCredit', params: { id: props.row.id } }"
                                         text-color="primary" label="Add Credit" />
                                     <q-btn dense color="red" text-color="white" label="Remove"
                                         @click="loanStore.removeLender(props.row.id)" />
