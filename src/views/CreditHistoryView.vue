@@ -107,7 +107,7 @@ export default {
         return {
             lender,
             credits,
-            tab: ref('payment'),
+            tab: ref('credit'),
             payments,
             formatDate:( _date)=>{
                 return  date.formatDate(_date, 'MMM D, YYYY')
