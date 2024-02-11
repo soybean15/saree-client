@@ -52,7 +52,7 @@
                         <q-card-section class="text-center">
                             <div class="flex justify-between items-center">
 
-                                <strong class="text-xl">{{ props.row.name }}</strong>
+                                <strong class="text-xl">{{ props.row.name }} <q-badge color="green" v-if="( props.row.total_credit - props.row.total_paid)==0">Paid</q-badge></strong>
                                 <q-btn :to="{name:'creditHistory',params:{id:props.row.id}}" flat round color="primary" icon="history" />
                             </div>
 
@@ -71,7 +71,7 @@
                             <div class="flex justify-between items-center">
                                 <span class="font-bold">Total Paid</span>
                                 <q-chip dense color="accent" text-color="white">
-                                    P{{ props.row.total_paid }}
+                                    P{{ parseInt( props.row.total_paid) }}
                                 </q-chip>
 
                             </div>
@@ -83,13 +83,16 @@
                             </div>
 
 
-                            <div class="flex justify-end py-3 ">
-                                <q-btn-group>
+                            <div class="flex justify-between py-3 ">
+                            
                                   
-                                    <q-btn dense color="green" text-color="white" label="Payment" />
-                                    <q-btn dense color="secondary" :to="{name:'addCredit',params:{id:props.row.id}}" text-color="primary" label="Add Credit" />
+                                    <payment-modal :id="props.row.id"/>
+                                    <div>
+                                        <q-btn dense color="secondary" :to="{name:'addCredit',params:{id:props.row.id}}" text-color="primary" label="Add Credit" />
                                     <q-btn dense color="red" text-color="white" label="Remove"  @click="loanStore.removeLender(props.row.id)" />
-                                </q-btn-group>
+                                    </div>
+                                   
+                               
 
                             </div>
 
@@ -169,6 +172,7 @@
   
 <script>
 import DialogVue from '@/components/Dialog.vue'
+import PaymentModal from '@/components/PaymentModal.vue';
 import { ref } from 'vue'
 import { useLoanStore } from '@/stores/loans';
 import { storeToRefs } from 'pinia';
@@ -276,7 +280,7 @@ const rows = [
 
 
 export default {
-    components: { DialogVue ,BreadCrumbs},
+    components: { DialogVue ,BreadCrumbs,PaymentModal},
     setup() {
 
         const loanStore = useLoanStore()
@@ -285,9 +289,10 @@ export default {
         const newLender = ref({
           
             name: '',
-            total_credit: 0,
-            total_paid: 0,
-            credits:[]
+            total_credit: null,
+            total_paid: null,
+            credits:[],
+            payments:[]
         })
 
         return {

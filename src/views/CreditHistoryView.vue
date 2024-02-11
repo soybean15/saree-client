@@ -15,7 +15,7 @@
                     <q-timeline color="secondary">
 
 
-                        <q-timeline-entry class="text-lg font-bold" :title="date" color="green" v-for="date in Object.keys(credits)" :key="date">
+                        <q-timeline-entry class="text-lg font-bold" :title="formatDate(date)" color="green" v-for="date in Object.keys(credits)" :key="date">
                             <ul>
                                 <li v-for="item in credits[date]" :key="item.id">
                                     <div>{{ item.name }}</div>
@@ -48,8 +48,16 @@
                 </q-tab-panel>
 
                 <q-tab-panel name="payment">
-                    <div class="text-h6">Alarms</div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+
+                    
+                   <ul>
+
+                    <li class="flex justify-between" v-for="item in payments" :key="item.id">
+                        <span class="text-lg">{{ formatDate(item.date) }}</span>
+                        <span class="text-lg font-bold text-green-700">-P{{ item.payment }}</span>
+                    </li>
+                   </ul>
+                  
                 </q-tab-panel>
 
             </q-tab-panels>
@@ -65,7 +73,7 @@ import BreadCrumbs from '@/components/BreadCrumbs.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useLoanStore } from '@/stores/loans';
 import { computed, ref } from 'vue';
-
+import { date } from 'quasar'
 
 
 const groupedDatabyDate = (items) => {
@@ -82,7 +90,7 @@ export default {
     components: { BreadCrumbs },
     setup() {
         const route = useRoute()
-        const router = useRouter()
+        
         const id = route.params.id
 
         const loanStore = useLoanStore()
@@ -92,11 +100,18 @@ export default {
         const credits = computed(() => {
             return groupedDatabyDate(lender.value.credits)
         })
+        const payments = computed(()=>{
+            return lender.value.payments
+        })
 
         return {
             lender,
             credits,
-            tab: ref('credit')
+            tab: ref('payment'),
+            payments,
+            formatDate:( _date)=>{
+                return  date.formatDate(_date, 'MMM D, YYYY')
+            }
         }
 
     }

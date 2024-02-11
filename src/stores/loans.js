@@ -15,7 +15,8 @@ export const useLoanStore = defineStore('loan', () => {
 
     const addLender = (lender, closure) => {
         lender.id = generateId();
-        lender.total_credit = parseInt(lender.total_credit);
+        lender.total_credit  =lender.total_credit?  parseInt(lender.total_credit):0
+        lender.total_paid=0 
         lenders.value.push(lender)
         localStorage.setItem('lenders', JSON.stringify(lenders.value));
         console.log(lenders.value)
@@ -63,6 +64,19 @@ export const useLoanStore = defineStore('loan', () => {
         }
     }
 
+    const payCredit=(lender,item)=>{
+        const index = lenders.value.findIndex(item => item.id === lender.id);
+        if (index !== -1) {
+            lenders.value[index].total_paid =  parseInt(lender.total_paid) + parseInt(item.payment)
 
-    return { lenders, addLender, addCredit, removeLender ,getLender}
+            console.log(lenders.value[index])
+           lenders.value[index].payments.push(item);
+           
+            localStorage.setItem('lenders', JSON.stringify(lenders.value));
+            
+        }
+    }
+
+
+    return { lenders, addLender, addCredit, removeLender ,getLender,payCredit}
 })

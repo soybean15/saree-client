@@ -73,7 +73,9 @@
                     ]" />
                     <div class="flex  items-center">
                         <q-input v-model="item.price" outlined type="number" label="Price" class="w-40"
-                            @update:model-value="onChange(item)" />
+                            @update:model-value="onChange(item)" :rules="[
+                                val => (val && val.length > 0) || 'Price is Required'
+                            ]" />
 
 
                         <div class="flex items-center">
@@ -104,8 +106,7 @@
 
 <script>
 import { useLoanStore } from '@/stores/loans'
-import { useRoute,useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
+import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { date } from 'quasar'
 import BreadCrumbs from '@/components/BreadCrumbs.vue'
@@ -148,7 +149,7 @@ export default {
                 const timeStamp = Date.now()
                 const formattedString = date.formatDate(timeStamp, 'YYYY-MM-DD')
                 const uniqueId = generateUniqueId();
-                const item = { id: uniqueId, name: '', price: 0, date: formattedString, qty: 1, total: 0 }
+                const item = { id: uniqueId, name: '', price: null, date: formattedString, qty: 1, total: 0 }
                 items.value.push(item)
 
 
@@ -184,8 +185,8 @@ export default {
             },
             isFormValid: () => {
                 for (const item of items.value) {
-                    if (!item.name.trim()) {
-                        return false; // Return false if name is empty or contains only whitespace
+                    if (!item.name.trim() || isNaN(item.price) || item.price <= 0) {
+                        return false; // Return false if name is empty or price is not a valid number
                     }
                 }
                 return true; // Return true if all names are valid
@@ -197,7 +198,7 @@ export default {
                 lender.value.total_credit = lender.value.total_credit + getTotal()
                 loanStore.addCredit(lender.value, items.value)
                 closeDialog()
-                router.push({name:'loans'})
+                router.push({ name: 'loans' })
             }
         }
 
