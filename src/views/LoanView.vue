@@ -1,8 +1,18 @@
 <template>
     <div class="q-pa-md">
         <bread-crumbs/>
+
+
+        <div class="font-bold px-3 text-xl mt-5">Mga Pautang</div>
+        <q-table  :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
+            <template #top-left>
+
+
+
+                <q-btn color="green" label="Export" @click="exportData('lenders')"/>
+             
         
-        <q-table title="Mga Pautang" :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
+            </template>
             <template #top-right>
                 <div class="flex space-x-4">
                     <q-input dense debounce="300" v-model="filter" placeholder="Search">
@@ -188,6 +198,7 @@ import { ref } from 'vue'
 import { useLoanStore } from '@/stores/loans';
 import { storeToRefs } from 'pinia';
 import BreadCrumbs from '@/components/BreadCrumbs.vue';
+import {exportData} from '@/utils/exportJson'
 const columns = [
     {
         name: 'name',
@@ -313,6 +324,7 @@ export default {
             lenders,
             loanStore,
             newLender,
+            exportData,
             onSubmit:   (closeDialog) => {
                 loanStore.addLender({...newLender.value},()=>{
               
