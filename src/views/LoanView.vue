@@ -26,7 +26,11 @@
                                     <q-input outlined v-model="newLender.total_credit" label="Credits" type="number"
                                         class="w-full" />
 
-                                    <q-btn type="submit" class="my-2" color="primary" label="Add" />
+                                        <div class="flex justify-end mb-10">
+                                            <q-btn type="submit" class="my-2" color="primary" label="Add" />
+                                        </div>
+
+                                 
 
                                 </div>
 
