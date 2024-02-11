@@ -10,16 +10,16 @@
         <q-table :rows="lenders" :columns="columns" :grid="$q.screen.xs" row-key="name" :filter="filter">
           
             <template #top>
-                <div class="flex space-x-4">
+                <div class="flex justify-between w-full">
                     <q-input  dense debounce="300" v-model="filter" placeholder="Search">
                         <template v-slot:append>
                             <q-icon  name="search" />
                         </template>
                     </q-input>
 
-                    <dialog-vue :title="'Add New Creditor'">
+                    <dialog-vue :title="'Add New Creditor'" class="my-2">
                         <template #button="{ open }">
-                            <q-btn rounded color="primary" icon-right="add" label="Add Lender" @click="open($q.screen.xs ? 'bottom' : 'standard')" />
+                            <q-btn  color="primary" icon-right="add" label="Add New" @click="open($q.screen.xs ? 'bottom' : 'standard')" />
                         </template>
 
                         <template #body="{ closeDialog }">
