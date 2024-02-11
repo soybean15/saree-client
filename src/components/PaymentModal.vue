@@ -2,7 +2,7 @@
     <Dialog :title="'Add Payment'">
         <template #button="{ open }">
 
-            <q-btn dense color="green" text-color="white" label="Payment" @click="open('bottom')" :disable="( lender.total_credit -lender.total_paid)==0"/>
+          <slot name="button" :open="open"></slot>
 
         </template>
 

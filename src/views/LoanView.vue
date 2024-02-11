@@ -86,7 +86,12 @@
                             <div class="flex justify-between py-3 ">
                             
                                   
-                                    <payment-modal :id="props.row.id"/>
+                                    <payment-modal :id="props.row.id">
+                                        <template #button="{open}">
+                                    <q-btn dense color="green" text-color="white" label="Payment" @click="open('bottom')" :disable="( props.row.total_credit -props.row.total_paid)==0"/>
+
+                                        </template>
+                                    </payment-modal>
                                     <div>
                                         <q-btn dense color="secondary" :to="{name:'addCredit',params:{id:props.row.id}}" text-color="primary" label="Add Credit" />
                                     <q-btn dense color="red" text-color="white" label="Remove"  @click="loanStore.removeLender(props.row.id)" />
@@ -107,7 +112,7 @@
             <template v-slot:body="props">
                 <q-tr :props="props">
                     <q-td key="name" :props="props">
-                        {{ props.row.name }}
+                     <span>{{ props.row.name }}</span>    <q-badge color="green" v-if="( props.row.total_credit - props.row.total_paid)==0">Paid</q-badge>
                     </q-td>
                     <q-td key="total_credit" :props="props">
                         <q-chip dense color="primary" text-color="white">
@@ -130,16 +135,22 @@
                         <div class="flex justify-center">
                             <q-btn-dropdown color="primary" label=" Actions">
                                 <q-list>
-                                    <q-item clickable v-close-popup >
+                                    <q-item clickable v-close-popup :to="{name:'creditHistory',params:{id:props.row.id}}">
                                         <q-item-section>
                                             <q-item-label>History</q-item-label>
                                         </q-item-section>
                                     </q-item>
-                                    <q-item clickable v-close-popup>
+
+                                    <payment-modal :id="props.row.id">
+                                        <template #button="{open}">
+                                    <q-item clickable  @click="open('standard')" :disable="( props.row.total_credit -props.row.total_paid)==0"> 
                                         <q-item-section>
                                             <q-item-label>Payment</q-item-label>
                                         </q-item-section>
+                                   
                                     </q-item>
+                                </template>
+                                    </payment-modal>
 
                                     <q-item clickable v-close-popup :to="{name:'addCredit',params:{id:props.row.id}}" >
                                         <q-item-section>
